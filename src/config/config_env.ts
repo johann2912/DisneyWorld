@@ -18,6 +18,10 @@ const config = {
             port: process.env.REDIS_PORT,
             password: process.env.REDIS_PASSWORD,
         }
+    },
+    jwt: {
+        accessKey: process.env.JWT_ACCESS_KEY,
+        refreshKey: process.env.JWT_REFRESH_KEY,
     }
 }
 
