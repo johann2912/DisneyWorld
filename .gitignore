@@ -5,6 +5,10 @@ node_modules/
 dist
 .env
 docker-compose.yml
+combined.log
+error.log
+redis_data
+mysql_data
 
 ### Linux ###
 *~

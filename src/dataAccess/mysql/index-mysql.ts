@@ -1,12 +1,21 @@
-import  { Sequelize } from 'sequelize';
-import config from '../../config/config_env';
+import sequelize from './connection-mysql';
+import Character from './models/character';
+import Movie from './models/movie';
+import Category from './models/category';
 
-const sequelize = new Sequelize({
-  dialect: 'mysql',
-  host: config.db.mysql.host,
-  username: config.db.mysql.user,
-  password: config.db.mysql.password,
-  database: config.db.mysql.dbName,
-});
 
-export default sequelize;
+
+Character.belongsToMany(Movie, { through: 'CharacterMovies' });
+Movie.belongsToMany(Character, { through: 'CharacterMovies' });
+
+Movie.belongsToMany(Category, { through: 'MovieCategories' });
+Category.belongsToMany(Movie, { through: 'MovieCategories' });
+
+
+sequelize.sync({ force: true }) 
+    .then(() => {
+        console.log('Database and tables synced');
+    })
+    .catch((error) => {
+        console.error('Error syncing database:', error);
+    });

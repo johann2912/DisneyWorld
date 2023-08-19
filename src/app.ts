@@ -3,6 +3,7 @@ import IndexRoutes from './routes/index.routes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger';
 import morgan from 'morgan';
+import logger from './config/logger';
 
 export class App {
     private app: Application;
@@ -24,7 +25,8 @@ export class App {
     }
     
     middlewares(): void {
-        this.app.use(morgan('dev'));
+        this.app.use(morgan('combined', { stream: { write: (message) => logger.info(message.trim()) } }))
+        //this.app.use(morgan('dev'));
         this.app.use(express.json());
         this.app.use(urlencoded({extended: false}))
     }
